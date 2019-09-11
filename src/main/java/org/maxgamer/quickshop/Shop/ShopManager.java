@@ -498,6 +498,12 @@ public class ShopManager {
                 Util.debugLog("PermissionChecker canceled shop creation");
                 return false;
             }
+
+            if (plugin.getGriefPreventionWrapper() != null && plugin.getGriefPreventionWrapper().canEditBlock(p, b)) {
+                Util.debugLog("GriefPrevention canceled shop creation");
+                return false;
+            }
+
             ShopPreCreateEvent spce = new ShopPreCreateEvent(p, b.getLocation());
             Bukkit.getPluginManager().callEvent(spce);
             if (spce.isCancelled()) {

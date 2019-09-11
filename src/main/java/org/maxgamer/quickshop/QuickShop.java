@@ -8,6 +8,7 @@ import java.util.*;
 import java.util.Map.Entry;
 
 import lombok.*;
+import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -154,6 +155,11 @@ public class QuickShop extends JavaPlugin {
     private static PermissionManager permissionManager;
 
     /**
+     * Support for GriefPrevention
+     */
+    private GriefPreventionWrapper griefPreventionWrapper;
+
+    /**
      * Get the Player's Shop limit.
      *
      * @param p The player you want get limit.
@@ -179,6 +185,13 @@ public class QuickShop extends JavaPlugin {
             this.openInvPlugin = Bukkit.getPluginManager().getPlugin("OpenInv");
             if (this.openInvPlugin != null) {
                 getLogger().info("Successfully loaded OpenInv support!");
+            }
+        }
+
+        if (getConfig().getBoolean("plugin.GriefPrevention")) {
+            if (GriefPrevention.instance != null) {
+                griefPreventionWrapper = new GriefPreventionWrapper();
+                getLogger().info("Successfully loaded GriefPrevention support!");
             }
         }
     }
